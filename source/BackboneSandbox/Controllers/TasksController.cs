@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-//using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using BackboneSandbox.Models;
@@ -37,6 +36,8 @@ namespace BackboneSandbox.Controllers
         {
             return View();
         }
+
+        #region -- BACKBONE CRUD OPERATIONS --
 
         /// <summary>
         /// Creates, or inserts, a single Task, as Json object.
@@ -105,6 +106,7 @@ namespace BackboneSandbox.Controllers
             return Json(true, JsonRequestBehavior.AllowGet);
         }
 
+        #endregion
 
-	}
+    }
 }

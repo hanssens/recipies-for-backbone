@@ -3,7 +3,7 @@
     // model for: a single task
     Task = Backbone.Model.extend({
         initialize: function() {
-            //console.log('Task() initialized: ' + this.get("Title"));
+            console.log('Task() initialized: ' + this.get("Title"));
         },
 
         // implementing custom crud operations
@@ -37,14 +37,7 @@
         model: Task,
         url: '/tasks/list'
     });
-
-    // create a new collection, and fetch the shizzle
-    //var collection = new TaskList();
-    //collection.fetch();
-
-    // log it
-    //console.log(collection);
-    
+   
     // no idea what this does, yet. but i believe something with the browser's back button?
     Backbone.history.start();
 });
