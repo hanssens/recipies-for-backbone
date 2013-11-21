@@ -3,7 +3,7 @@
     // model for: a single task
     Task = Backbone.Model.extend({
         initialize: function() {
-            console.log('Task initialized');
+            console.log('Single Task initialized');
             //var currentTitle = this.get("title");
             //console.log(currentTitle);
         },
@@ -15,15 +15,19 @@
 
             switch (method) {
                 case "read":
+                    console.log('HttpMethod: read called');
                     options.url = "/tasks/retrieve/" + model.get("id");
                     break;
                 case "create":
+                    console.log('HttpMethod: create called');
                     options.url = "/tasks/create";
                     break;
                 case "update":
+                    console.log('HttpMethod: update called');
                     //options.url = "/tasks/setUser.aspx";
                     break;
                 case "delete":
+                    console.log('HttpMethod: delete called');
                     options.url = "/tasks/delete/" + model.get("id");
                     break;
             }
