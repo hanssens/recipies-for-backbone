@@ -3,9 +3,7 @@
     // model for: a single task
     Task = Backbone.Model.extend({
         initialize: function() {
-            console.log('Single Task initialized');
-            //var currentTitle = this.get("title");
-            //console.log(currentTitle);
+            //console.log('Task() initialized: ' + this.get("Title"));
         },
 
         // implementing custom crud operations
@@ -41,11 +39,11 @@
     });
 
     // create a new collection, and fetch the shizzle
-    var collection = new TaskList();
-    collection.fetch();
+    //var collection = new TaskList();
+    //collection.fetch();
 
     // log it
-    console.log(collection);
+    //console.log(collection);
     
     // no idea what this does, yet. but i believe something with the browser's back button?
     Backbone.history.start();

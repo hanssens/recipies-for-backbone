@@ -14,12 +14,18 @@
 </div>
 
 <script type="text/template" id="task-overview-template">
-    <ul>
-        <li>
-            <span>Titel: </span><%= Title %>
-        </li>
-    </ul>
+    @*<ul>
+            <li>
+                <span>Titel: </span><%= Title %>
+            </li>
+        </ul>*@
+
+    <% _.each(tasks, function(task, i ) { %>
+    <span><%= task.Title %></span>
+    <% }); %>
     
+    
+
 </script>
 
 
@@ -32,31 +38,79 @@
         
         $(function() {
 
+
+            console.log('Fetching tasks in Overview.cshtml:');
+            var listOfTasks = new TaskList();
+            listOfTasks.fetch().done(function() {
+                console.log('fetching done, amount of items: ' + listOfTasks.length);
+                
+
+                // after defining it, it's time to initialize the view
+                var taskOverview = new TaskOverview({
+                    // bind it to the element; this can also be done in the constructor above
+                    el: $("#task-overview"),
+
+                    model: listOfTasks
+
+                });
+
+
+
+                
+            });
+            console.log(listOfTasks);
+            //console.log(listOfTasks.model);
+
             // define the View for this specific page
             TaskOverview = Backbone.View.extend({
             
-                initialize: function() {
+                template: _.template($("#task-overview-template").html()),
+
+                initialize: function () {
+                    console.log('Function: initialize()');
                     this.render();
                 },
                 
+                
+                
                 render: function () {
+                    console.log('Function: render()');
                     // compile the template using underscore
-                    var template = _.template( $("#task-overview-template").html(), { } );
-            
-                    // load the compiled HTML into the Backbone "el"
-                    this.$el.html(template);
+                    //var template = _.template( $("#task-overview-template").html(), { } );
+                    
+                    // grab the HTML out of our template tag and pre-compile it, using underscorejs
+                    //var template = _.template(
+                    //    $("#task-overview-template").html(), listOfTasks
+                    //);
+                    // 
+                    // this.$el.html(template);
+
+
+                    // todo: fetch the model/inject it into the template
+
+                    // load the compiled HTML into the "el", using backbone
+                    //var content = this.template(listOfTasks.toJSON());
+                    //this.$el.html(content);
+                    
+                    //this.$el.html(this.template(this.model.toJSON()));
+                    
+                    // inject the collection into the view, e.g. create a 'tasks' variable for the viewtemplate to use
+                    console.log(this.model.toJSON());
+                    this.$el.html(this.template({tasks:this.model.toJSON()}));
+                    return this;
                 }
                 
             });
 
 
-            // after defining it, it's time to initialize the view
-            var taskOverview = new TaskOverview({
-                
-                // bind it to the element; this can also be done in the constructor above
-                el: $("#task-overview")
-                
-            });
+
+            
+
+
+
+
+
+
 
         });
     </script>
