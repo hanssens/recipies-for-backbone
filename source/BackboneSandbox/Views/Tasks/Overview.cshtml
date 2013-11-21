@@ -1,92 +1,83 @@
-﻿
+﻿<!--
+    Task Overview: This page simply lists a set of tasks from the backend.
+-->
+
 @{
-    ViewBag.Title = "Tasks Overview";
+    ViewBag.Title = "Overview";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<section class="hbox stretch" id="taskapp">
-    <aside>
-        <section class="vbox">
-            <header class="header bg-light lter bg-gradient b-b">
-                <button class="btn btn-success btn-sm pull-right btn-icon" id="new-task"><i class="icon-plus"></i>Add new task</button>
-                <p>@ViewBag.Title</p>
-            </header>
-            <section class="bg-light lter">
-                <section class="hbox stretch">
-                    
-                    <aside>
-                        <section class="vbox">
-                            <section class="scrollable wrapper">
-                                <!-- task list -->
-                                <ul id="task-list" class="list-group list-group-sp"></ul>
-                                <!-- backbone template -->
-                                <script type="text/template" id="item-template">
-                                    <div class="view" id="task-<%- id %>">
-                                        <button class="destroy close hover-action">&times;</button>
-                                        <div class="checkbox">
-                                            <input class="toggle" type="checkbox"><%= done ? 'checked="checked"' : '' %></>
-                                            <span class="task-name"><%- (name && name.length) ? name : 'New task' %></span>
-                                            <input class="edit form-control" type="text" value="<%- name %>" />
-                                        </div>
-                                    </div>
-                                </script>
-                                <!-- / template  -->
-                                <!-- task list -->
-                            </section>
-                        </section>
-                    </aside>
-                    
-                </section>
-            </section>
-            <footer class="footer bg-white-only b-t">
-                <p class="checkbox"><label><input id="toggle-all" type="checkbox"> Mark all as complete</label></p>
-            </footer>
-        </section>
-    </aside>
-    <!-- .aside -->
-    <aside class="col-lg-4 bg-white">
-        <section class="vbox flex b-l" id="task-detail">
-            <!-- task detail -->
-            <script type="text/template" id="task-template">
-                <header class="header bg-light lt b-b">
-                    <p class="m-b">
-                        <span class="text-muted">Created:</span> <%- moment(date).format('MMM Do, h:mm a') %>
-                    </p>
-                    <div class="lter pull-in b-t m-t-xxs">
-                        <textarea type="text" class="form-control form-control-trans scrollable" placeholder="Task description"><%- desc %></textarea>
-                    </div>
-                </header>
-                <section>
-                    <section>
-                        <section>
-                            <ul id="task-comment" class="list-group no-radius no-border m-t-n-xxs"></ul>
-                        </section>
-                    </section>
-                </section>
-                <footer class="footer bg-light lter clearfix b-t">
-                    <div class="input-group m-t-sm">
-                        <input type="text" class="form-control input-sm" id="task-c-input" placeholder="Type a comment">
-                        <span class="input-group-btn">
-                            <button class="btn btn-success btn-sm" type="button" id="task-c-btn"><i class="icon-pencil"></i>Add comment</button>
-                        </span>
-                    </div>
-                </footer>
-            </script>
-            <!-- task detail -->
-            <script type="text/template" id="item-c-template">
-                <div class="view">
-                    <button class="destroy close hover-action">&times;</button>
-                    <div>
-                        <span><%- desc %></span>
-                        <small class="text-muted block text-xs"><i class="icon-time"></i> <%- moment(date).fromNow() %></small>
-                    </div>
-                </div>
-            </script>
-        </section>
-    </aside>
-    <!-- /.aside -->
-</section>
+<h2>@ViewBag.Title</h2>
+
+<div id="task-overview">
+    <!-- pretty empty here... the viewmodel 'TaskOverview' will be injected here -->    
+</div>
+
+<script type="text/template" id="task-overview-template">
+
+    <!-- in this view template, iterate through each item in the 'tasks' collection-->
+    <% _.each(tasks, function(task, i ) { %>
+        <span><%= task.Title %></span>
+    <% }); %>
+    
+</script>
+
 
 @section Scripts{
+    <!-- include the basic setup -->
     <script src="@Url.Content("~/assets/scripts/tasks.js")"></script>    
+    
+    <script>
+        
+        $(function() {
+
+            // initialize a new TaskList()
+            var listOfTasks = new TaskList();
+            
+            // fetch the items - do note the 'done' callback here;
+            // once all the items have been retrieved, initialize the viewmodel (= new instance of "TaskOverview")
+            listOfTasks.fetch().done(function() {
+
+                console.log('Fetching of tasks through backend isdone, found amount of items: ' + listOfTasks.length);
+
+                // initialize a new View
+                var taskOverview = new TaskOverview({
+
+                    // ... and bind it to the appropriate <div> element; 
+                    // note: binding this can also be done in the constructor of TaskOverview, 
+                    // but this way is much cleaner and more reusable.
+                    el: $("#task-overview"),
+
+                    // also, don't forget to attach the list of dataitems (models) to this view
+                    model: listOfTasks
+
+                });
+                
+            });
+
+            // View object for this page
+            TaskOverview = Backbone.View.extend({
+            
+                // define the *view-template* to be injected
+                template: _.template($("#task-overview-template").html()),
+
+                initialize: function () {
+                    console.log('Function: initialize()');
+                    this.render();
+                },
+                
+                render: function () {
+                    console.log('Function: render()');
+                    
+                    // actually inject the model ("collection") into the view, 
+                    // whilst in the process creating a 'tasks' variable for the viewtemplate to use
+                    this.$el.html(this.template({tasks:this.model.toJSON()}));
+                    return this;
+                }
+                
+            });
+
+        });
+        
+    </script>
 }
