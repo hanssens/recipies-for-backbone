@@ -29,6 +29,8 @@
                     options.url = "/tasks/delete/" + model.get("id");
                     break;
             }
+            //trigger sync with new options
+            Backbone.sync(method, model, options);
         }
     });
 
