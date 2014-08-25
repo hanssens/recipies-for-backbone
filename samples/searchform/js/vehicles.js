@@ -2,6 +2,12 @@
  * Created by Hanssens on 23-08-14.
  */
 
+"use strict";
+
+/*
+ * Model
+ */
+
 var Vehicle = Backbone.Model.extend({
 
     parse: function(response) {
@@ -12,11 +18,15 @@ var Vehicle = Backbone.Model.extend({
 
 });
 
+/*
+ * Collection
+ */
+
 var VehicleCollection = Backbone.Collection.extend({
     model: Vehicle,
     url: '/data/vehicles.json',
 
-    parse: function(response) {
+    parse: function(response, options) {
         return response;
     },
 
@@ -24,20 +34,20 @@ var VehicleCollection = Backbone.Collection.extend({
      * Custom Functions
      */
 
+
     listAllBrands: function() {
-        //var brands = this.where({brand:})
-        console.log("this:");
-        console.log(this);
+        console.log("Function: listAllBrands()");
+        var brands = this.pluck("merk");
 
-        var brands = this.pluck('merk');
-        console.log(JSON.stringify(brands));
-
-        return [ "Audi", "BMW", "Chrysler"];
+        //console.log(brands);
+        //return [ "Audi", "BMW", "Chrysler"];
+        return brands;
     },
 
     listAllModelsByBrand: function(brand) {
 
         //var models = this.where({merk: brand});
+
         return ["X5", "5 Serie", "3 Serie"];
         //console.log(models);
         //return models;
@@ -45,7 +55,7 @@ var VehicleCollection = Backbone.Collection.extend({
 });
 
 /*
- * VIEWS
+ * View
  */
 
 
@@ -79,7 +89,7 @@ var VehicleSearchView = Backbone.View.extend({
         if ($(e.currentTarget).attr("id") == "input-brand") {
             // get currently selected 'brand'
             var selectedBrand = $(e.currentTarget).val();
-            //console.log("yeah! : " + selectedBrand);
+
             // fill the models, by brand
             this.fillModelsByBrand(selectedBrand);
         }

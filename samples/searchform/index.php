@@ -77,7 +77,6 @@
 
             // initialize collection and fetch the data (async)
             var vehicles = new VehicleCollection();
-            vehicles.fetch();
 
             // initialize the view, and append it to element '#search-container'
             var view = new VehicleSearchView({
@@ -89,12 +88,19 @@
                 el: "#search-container"
             });
 
-            // fill dropdown with all brands
-            view.fillBrands("#input-brand");
-            view.fillYears("#input-built-from");
-            view.fillYears("#input-built-till");
-            view.fillPrices("#input-price-from");
-            view.fillPrices("#input-price-till");
+            vehicles.fetch({success: function(){
+
+                // fill dropdown with all brands
+                view.fillBrands("#input-brand");
+                view.fillYears("#input-built-from");
+                view.fillYears("#input-built-till");
+                view.fillPrices("#input-price-from");
+                view.fillPrices("#input-price-till");
+
+            }});
+
+
+
         });
     </script>
 
