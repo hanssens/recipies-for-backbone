@@ -45,12 +45,19 @@ var VehicleCollection = Backbone.Collection.extend({
     },
 
     listAllModelsByBrand: function(brand) {
+        console.log("Function: listAllModelsByBrand():");
 
-        //var models = this.where({merk: brand});
+        var models = [];
 
-        return ["X5", "5 Serie", "3 Serie"];
-        //console.log(models);
-        //return models;
+        // filter all vehicles by brand first
+        var filtered = this.where({merk: brand});
+
+        // next, fetch the models
+        filtered.forEach(function(vehicle) {
+            models.push(vehicle.attributes.model);
+        });
+
+        return models;
     }
 });
 
@@ -134,7 +141,7 @@ var VehicleSearchView = Backbone.View.extend({
             .find('option')
             .remove()
             .end()
-            .append('<option value="" disabled selected>Selecteer eerst een merk</option>')
+            .append('<option value="" disabled selected>Selecteer een model</option>')
             .prop('disabled', false)
         ;
 
