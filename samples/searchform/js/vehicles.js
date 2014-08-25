@@ -77,6 +77,29 @@ var VehicleCollection = Backbone.Collection.extend({
         }
 
         return years;
+    },
+
+    listAllPrices: function() {
+        var minVehicle = this.min(function(v) {
+            return v.get("verkoopprijs_particulier");
+        });
+
+        var maxVehicle = this.max(function(v) {
+            return v.get("verkoopprijs_particulier");
+        });
+
+        var interval = 500;
+        var min = Math.floor(minVehicle.attributes.verkoopprijs_particulier / interval) * interval;
+        var max = Math.ceil(maxVehicle.attributes.verkoopprijs_particulier / interval) * interval;
+
+        console.log("Min: " + min + ", max: " + max);
+        var prices = [];
+
+        for (var i = min; i <= max; i += 500) {
+            prices.push(i);
+        }
+
+        return prices;
     }
 });
 
@@ -119,6 +142,7 @@ var VehicleSearchView = Backbone.View.extend({
             // fill the models, by brand
             this.fillModelsByBrand(selectedBrand);
         }
+
     },
 
     // Function: Populates the as argument provided element with a list of <option>.
@@ -143,7 +167,8 @@ var VehicleSearchView = Backbone.View.extend({
     },
 
     fillPrices: function(el) {
-        var prices = [ 500, 1000, 1500, 2000, 2500 ];
+        //var prices = [ 500, 1000, 1500, 2000, 2500 ];
+        var prices = this.collection.listAllPrices();
         prices.forEach(function(p){
             $(el).append($('<option>', { value: p, text: p }));
         });
