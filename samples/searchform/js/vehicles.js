@@ -38,10 +38,7 @@ var VehicleCollection = Backbone.Collection.extend({
     listAllBrands: function() {
         console.log("Function: listAllBrands()");
         var brands = this.pluck("merk");
-
-        //console.log(brands);
-        //return [ "Audi", "BMW", "Chrysler"];
-        return brands;
+        return unique(brands);
     },
 
     listAllModelsByBrand: function(brand) {
@@ -57,7 +54,7 @@ var VehicleCollection = Backbone.Collection.extend({
             models.push(vehicle.attributes.model);
         });
 
-        return models;
+        return unique(models);
     }
 });
 
@@ -153,3 +150,21 @@ var VehicleSearchView = Backbone.View.extend({
     }
 
 });
+
+/*
+ * General Function
+ */
+
+/// Function: Filters the unique values from the provided collection, and sorts it.
+var unique = function (collection) {
+
+    var returnValue = [];
+    collection.filter(function(itm,i,a){
+        if (i==a.indexOf(itm)){
+            returnValue.push(itm);
+        }
+
+    });
+
+    return returnValue.sort();
+}
