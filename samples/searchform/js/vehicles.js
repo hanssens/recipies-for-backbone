@@ -55,6 +55,28 @@ var VehicleCollection = Backbone.Collection.extend({
         });
 
         return unique(models);
+    },
+
+    listAllYears: function() {
+
+        var minVehicle = this.min(function(v) {
+            return v.get("bouwjaar");
+        });
+
+        var maxVehicle = this.max(function(v) {
+            return v.get("bouwjaar");
+        });
+
+        var min = minVehicle.attributes.bouwjaar;
+        var max = maxVehicle.attributes.bouwjaar;
+
+        var years = [];
+
+        for (var i = min; i <= max; i++) {
+            years.push(i);
+        }
+
+        return years;
     }
 });
 
@@ -114,7 +136,7 @@ var VehicleSearchView = Backbone.View.extend({
 
     // Function: Fills the provided element with all available years of make/built
     fillYears: function(el) {
-        var years = [ 2001, 2002, 2003, 2004, 2005 ];
+        var years = this.collection.listAllYears();
         years.forEach(function(y){
             $(el).append($('<option>', { value: y, text: y }));
         });
@@ -139,8 +161,7 @@ var VehicleSearchView = Backbone.View.extend({
             .remove()
             .end()
             .append('<option value="" disabled selected>Selecteer een model</option>')
-            .prop('disabled', false)
-        ;
+            .prop('disabled', false);
 
         // populate the specific models
         models.forEach(function(b){
