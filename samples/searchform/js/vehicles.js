@@ -24,7 +24,7 @@ var Vehicle = Backbone.Model.extend({
 
 var VehicleCollection = Backbone.Collection.extend({
     model: Vehicle,
-    url: '/data/vehicles.json',
+    url: 'data/vehicles.json',
 
     parse: function(response, options) {
         return response;
