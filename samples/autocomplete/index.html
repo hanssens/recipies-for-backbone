@@ -1,0 +1,56 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Backbone AutoComplete</title>
+    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+</head>
+<body>
+<!-- Regular HTML be here... -->
+<div class="container">
+    <div class="span4">
+        <div class="form-group">
+
+            <div id="customer-autocomplete">
+                <input id="input-customer" name="customerId" />
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/typeahead.bundle.min.js"></script>
+<script src="js/autocomplete.js"></script>
+
+<!-- Template -->
+<script type="text/template" id="customer-autocomplete-template">
+    <label for="input-customer">Customer</label>
+    <input id="input-customer" name="customerId" />
+</script>
+
+<script>
+    $(function() {
+
+        // initialize collection and fetch the data (async)
+        var customers = new CustomersCollection();
+
+
+        var view = new CustomerAutoCompleteView({
+            collection: customers,
+            el: "#customer-autocomplete"
+        });
+
+        customers.fetch();
+
+    });
+</script>
+
+</body>
+</html>
