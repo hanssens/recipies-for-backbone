@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Backbone Dynamic Rows</title>
+    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+</head>
+<body>
+    <!-- Regular HTML be here... -->
+    <div class="container">
+        <div id="dynamic-rows-container"></div>
+    </div>
+
+    <!-- Template -->
+    <script type="text/template" id="dynamic-rows-template">
+
+        <div class="row">
+
+            <div class=".col-md-8">
+                <div class="form-group">
+                    <label for="input-name">Naam</label>
+                    <input id="input-name" name="brand" type="text">
+                </div>
+            </div>
+
+            <div class=".col-md-4">
+                <div class="form-group">
+                    <button id="btn-add" type="button"  class="btn btn-sm btn-default">Toevoegen</button>
+                    <button id="btn-delete" type="button" class="btn btn-sm btn-default">Verwijderen</button>
+                </div>
+            </div>
+
+        </div>
+
+    </script>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
+    <script src="js/people.js"></script>
+
+    <script>
+        $(function() {
+
+            // initialize collection
+            var people = new PeopleCollection();
+
+            // initialize the view, and append it to element '#search-container'
+            var view = new AttendeeView({
+
+                // bind to the collection of models
+                collection : people,
+
+                // bind to the UI element (e.g. empty div)
+                el: "#dynamic-rows-container"
+            });
+
+        });
+    </script>
+
+</body>
+</html>
