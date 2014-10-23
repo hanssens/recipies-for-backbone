@@ -5,7 +5,7 @@ This bucket of code is basically a simple sandbox which demonstrates some sample
 
 We do this by using the all-to-familiar Task list examples with which we try to give answers to: 
 
-* How to use [C# models](https://github.com/hanssens/backbone/tree/master/source/BackboneSandbox/Models) in Backbone.js
+* How to use [C# models](https://github.com/hanssens/backbone/tree/master/samples/asp.net%20mvc/BackboneSandbox/Models) in Backbone.js
 * Enable CRUD operations through thin and simple ActionControllers
 * ... not through WebAPI
 * Deviating from the REST naming conventions by using custom actions for these CRUD operations
@@ -24,10 +24,10 @@ This project consist out of the following elements:
 
 As you're probably familiar with ASP.NET MVC, let's look at the basic structure of the project. 
 
-The [Task() class](https://github.com/hanssens/backbone/blob/master/source/BackboneSandbox/Models/Task.cs) is our very simple, every day C# class which is only defined here.
+The [Task() class](https://github.com/hanssens/backbone/blob/master/samples/asp.net%20mvc/BackboneSandbox/Models/Task.cs) is our very simple, every day C# class which is only defined here.
 
-The foundation of our clientside<>serverside communication is the [TaskController](https://github.com/hanssens/backbone/blob/master/source/BackboneSandbox/Controllers/TasksController.cs). This is responsible for exposing several Actions (JsonResult) which the [Backbone plumbing (tasks.js) on its turn implements](https://github.com/hanssens/backbone/blob/master/source/BackboneSandbox/Assets/Scripts/tasks.js#L9-L31). 
+The foundation of our clientside<>serverside communication is the [TaskController](https://github.com/hanssens/backbone/blob/master/samples/asp.net%20mvc/BackboneSandbox/Controllers/TasksController.cs). This is responsible for exposing several Actions (JsonResult) which the [Backbone plumbing (tasks.js) on its turn implements](https://github.com/hanssens/backbone/blob/master/samples/asp.net%20mvc/BackboneSandbox/Assets/Scripts/tasks.js#L9-L31). 
 
-Finally, its just a matter of [setting up the Backbone View](https://github.com/hanssens/backbone/blob/master/source/BackboneSandbox/Views/Tasks/Overview.cshtml#L26-L82) to populate our .cshtml with the data and inject it into [a simple View Template](https://github.com/hanssens/backbone/blob/master/source/BackboneSandbox/Views/Tasks/Overview.cshtml#L16-L23).
+Finally, its just a matter of [setting up the Backbone View](https://github.com/hanssens/backbone/blob/master/samples/asp.net%20mvc/BackboneSandbox/Views/Tasks/Overview.cshtml#L26-L82) to populate our .cshtml with the data and inject it into [a simple View Template](https://github.com/hanssens/backbone/blob/master/samples/asp.net%20mvc/BackboneSandbox/Views/Tasks/Overview.cshtml#L16-L23).
 
 This, in a nutshell, got me started quickly. 
